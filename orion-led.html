@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Orion-Led Proctored Examination Portal">
+    <title>Orion-Led - Proctored Exam Portal</title>
+    <link rel="stylesheet" href="orion-led.css">
+</head>
+<body>
+    <!-- Proctoring Watermark -->
+    <div class="watermark">ORION-LED PROCTORED</div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Header -->
+        <header class="exam-header">
+            <h1>🖥️ Orion-Led Proctored Exam</h1>
+            <div class="timer-container">
+                <div class="timer" id="timer">15:00</div>
+                <span class="timer-label">Time Remaining</span>
+            </div>
+        </header>
+
+        <!-- Exam Info Section -->
+        <div class="exam-info-section" id="examInfoSection">
+            <div class="info-card">
+                <h2>📋 Exam Instructions</h2>
+                <ul>
+                    <li><strong>Duration:</strong> 15 minutes</li>
+                    <li><strong>Mandatory:</strong> Webcam and microphone must be enabled</li>
+                    <li><strong>Warning:</strong> Tab switching will result in automatic submission after multiple violations</li>
+                    <li><strong>Note:</strong> This exam is being actively proctored</li>
+                </ul>
+                <button class="btn-start" id="startBtn" onclick="initExam()">Start Exam</button>
+            </div>
+        </div>
+
+        <!-- Exam Section (Hidden Initially) -->
+        <div class="exam-section" id="examSection">
+            <!-- Questions Container -->
+            <div class="questions-container">
+                <div class="question">
+                    <h3>Question 1: What is the capital of France?</h3>
+                    <label><input type="radio" name="q1" value="A"> A) London</label>
+                    <label><input type="radio" name="q1" value="B"> B) Berlin</label>
+                    <label><input type="radio" name="q1" value="C"> C) Paris</label>
+                    <label><input type="radio" name="q1" value="D"> D) Madrid</label>
+                </div>
+
+                <div class="question">
+                    <h3>Question 2: Which programming language is commonly used for web development?</h3>
+                    <label><input type="radio" name="q2" value="A"> A) Python</label>
+                    <label><input type="radio" name="q2" value="B"> B) Java</label>
+                    <label><input type="radio" name="q2" value="C"> C) JavaScript</label>
+                    <label><input type="radio" name="q2" value="D"> D) C++</label>
+                </div>
+
+                <div class="question">
+                    <h3>Question 3: What does REST stand for in web APIs?</h3>
+                    <label><input type="radio" name="q3" value="A"> A) Remote Execution Status Transfer</label>
+                    <label><input type="radio" name="q3" value="B"> B) Representational State Transfer</label>
+                    <label><input type="radio" name="q3" value="C"> C) Resource Execution and Status Transfer</label>
+                    <label><input type="radio" name="q3" value="D"> D) Real-time Execution State Transfer</label>
+                </div>
+
+                <div class="question">
+                    <h3>Question 4: Which HTTP method is used to retrieve data?</h3>
+                    <label><input type="radio" name="q4" value="A"> A) POST</label>
+                    <label><input type="radio" name="q4" value="B"> B) GET</label>
+                    <label><input type="radio" name="q4" value="C"> C) PUT</label>
+                    <label><input type="radio" name="q4" value="D"> D) DELETE</label>
+                </div>
+
+                <div class="question">
+                    <h3>Question 5: What is the purpose of localStorage in JavaScript?</h3>
+                    <label><input type="radio" name="q5" value="A"> A) Run background tasks</label>
+                    <label><input type="radio" name="q5" value="B"> B) Store data in browser</label>
+                    <label><input type="radio" name="q5" value="C"> C) Make HTTP requests</label>
+                    <label><input type="radio" name="q5" value="D"> D) Manipulate DOM elements</label>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="submit-container">
+                <button class="btn-submit" id="submitBtn" onclick="submitExam('manual')">Submit Exam</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Fixed Webcam Feed -->
+    <div class="webcam-container" id="webcamContainer">
+        <div class="webcam-header">
+            <span class="webcam-label">📹 Live Feed</span>
+            <span class="webcam-indicator" id="webcamIndicator"></span>
+        </div>
+        <video id="webcamVideo" autoplay playsinline></video>
+        <div class="webcam-footer">
+            <small>Orion-Led Proctoring Active</small>
+        </div>
+    </div>
+
+    <!-- Warning Modal -->
+    <div class="modal-overlay" id="warningModal">
+        <div class="modal">
+            <div class="modal-header warning">
+                <h3>⚠️ Warning!</h3>
+            </div>
+            <div class="modal-body">
+                <p id="warningMessage">You switched tabs! Repeated violations may lead to auto-submission.</p>
+                <div class="count-info" id="countInfo"></div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-modal" onclick="closeWarningModal()">I Understand</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Submission Modal -->
+    <div class="modal-overlay" id="submitModal">
+        <div class="modal">
+            <div class="modal-header success">
+                <h3 id="submitTitle">✅ Submission Complete</h3>
+            </div>
+            <div class="modal-body">
+                <p id="submitMessage">Your test has been submitted successfully.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-modal" onclick="closeSubmitModal()">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div class="modal-overlay" id="confirmModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>❓ Confirm Submission</h3>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to submit your exam?</p>
+                <p class="confirm-warning">This action cannot be undone.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-modal btn-confirm-yes" onclick="confirmSubmission()">✅ Yes, Submit</button>
+                <button class="btn-modal btn-confirm-no" onclick="closeConfirmModal()">❌ Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Error Modal -->
+    <div class="modal-overlay" id="errorModal">
+        <div class="modal">
+            <div class="modal-header error">
+                <h3>❌ Error</h3>
+            </div>
+            <div class="modal-body">
+                <p id="errorMessage">An error occurred. Please try again.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-modal" onclick="closeErrorModal()">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="orion-led.js"></script>
+</body>
+</html>
+

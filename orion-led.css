@@ -1,0 +1,461 @@
+/* ============================================
+   Orion-Led Proctored Exam Portal - Styles
+   ============================================ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+    padding-right: 280px; /* Space for fixed webcam */
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Prevent text selection and copy-paste */
+* {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+input[type="radio"] {
+    -webkit-user-select: auto;
+    -moz-user-select: auto;
+    -ms-user-select: auto;
+    user-select: auto;
+    cursor: pointer;
+}
+
+/* Watermark */
+.watermark {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-45deg);
+    font-size: 4rem;
+    font-weight: bold;
+    color: rgba(102, 126, 234, 0.15);
+    z-index: 1;
+    pointer-events: none;
+    text-align: center;
+    white-space: nowrap;
+}
+
+/* Container */
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 10;
+}
+
+/* Header */
+.exam-header {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.exam-header h1 {
+    color: #667eea;
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.timer-container {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    background: #f8f9fa;
+    padding: 20px 40px;
+    border-radius: 10px;
+}
+
+.timer {
+    font-size: 3.5rem;
+    font-weight: bold;
+    color: #667eea;
+    font-family: 'Courier New', monospace;
+}
+
+.timer.warning {
+    color: #dc3545;
+    animation: pulse 1s infinite;
+}
+
+.timer-label {
+    font-size: 0.9rem;
+    color: #666;
+    margin-top: 5px;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+}
+
+/* Exam Info Section */
+.exam-info-section {
+    background: white;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+}
+
+.info-card h2 {
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+}
+
+.info-card ul {
+    list-style: none;
+    padding: 0;
+}
+
+.info-card ul li {
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+    color: #555;
+}
+
+.info-card ul li:last-child {
+    border-bottom: none;
+}
+
+.info-card ul li strong {
+    color: #667eea;
+}
+
+/* Exam Section */
+.exam-section {
+    background: white;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    display: none;
+}
+
+.exam-section.active {
+    display: block;
+}
+
+.questions-container {
+    margin-bottom: 30px;
+}
+
+.question {
+    margin-bottom: 30px;
+    padding: 25px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    border-left: 4px solid #667eea;
+}
+
+.question h3 {
+    color: #333;
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+}
+
+.question label {
+    display: block;
+    padding: 10px;
+    margin: 8px 0;
+    cursor: pointer;
+    transition: background 0.2s;
+    border-radius: 5px;
+}
+
+.question label:hover {
+    background: rgba(102, 126, 234, 0.1);
+}
+
+.question input[type="radio"] {
+    margin-right: 10px;
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+
+/* Submit Container */
+.submit-container {
+    text-align: center;
+    padding-top: 30px;
+    border-top: 2px solid #eee;
+}
+
+/* Buttons */
+.btn-start, .btn-submit {
+    background: #667eea;
+    color: white;
+    border: none;
+    padding: 15px 50px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 20px;
+}
+
+.btn-start:hover, .btn-submit:hover {
+    background: #5568d3;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+.btn-start:disabled, .btn-submit:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Webcam Container */
+.webcam-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 240px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    z-index: 1000;
+}
+
+.webcam-header {
+    background: #667eea;
+    color: white;
+    padding: 10px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.webcam-label {
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.webcam-indicator {
+    width: 10px;
+    height: 10px;
+    background: #28a745;
+    border-radius: 50%;
+    animation: blink 1.5s infinite;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+}
+
+#webcamVideo {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    display: block;
+    background: #000;
+}
+
+.webcam-footer {
+    background: #f8f9fa;
+    padding: 8px 15px;
+    text-align: center;
+    color: #666;
+    font-size: 0.85rem;
+}
+
+/* Modals */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.modal-overlay.show {
+    display: flex;
+}
+
+.modal {
+    background: white;
+    border-radius: 15px;
+    padding: 0;
+    max-width: 500px;
+    width: 90%;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    animation: slideUp 0.3s ease-in-out;
+    overflow: hidden;
+}
+
+.modal-header {
+    padding: 20px 30px;
+    border-bottom: 1px solid #eee;
+}
+
+.modal-header h3 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.modal-header.warning {
+    background: #fff3cd;
+    border-bottom-color: #ffc107;
+}
+
+.modal-header.warning h3 {
+    color: #856404;
+}
+
+.modal-header.success {
+    background: #d4edda;
+    border-bottom-color: #28a745;
+}
+
+.modal-header.success h3 {
+    color: #155724;
+}
+
+.modal-header.error {
+    background: #f8d7da;
+    border-bottom-color: #dc3545;
+}
+
+.modal-header.error h3 {
+    color: #721c24;
+}
+
+.modal-body {
+    padding: 30px;
+}
+
+.modal-body p {
+    font-size: 1.1rem;
+    color: #555;
+    margin-bottom: 15px;
+}
+
+.count-info {
+    background: #e3f2fd;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 15px;
+    font-weight: 600;
+    color: #1976d2;
+}
+
+.modal-footer {
+    padding: 20px 30px;
+    border-top: 1px solid #eee;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.btn-modal {
+    background: #667eea;
+    color: white;
+    border: none;
+    padding: 12px 40px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-modal:hover {
+    background: #5568d3;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+/* Confirmation Modal Specific Styles */
+.confirm-warning {
+    color: #dc3545;
+    font-weight: 600;
+    margin-top: 10px;
+    font-size: 0.95rem;
+}
+
+.btn-confirm-yes {
+    background: #28a745;
+}
+
+.btn-confirm-yes:hover {
+    background: #218838;
+    box-shadow: 0 5px 15px rgba(40, 167, 69, 0.4);
+}
+
+.btn-confirm-no {
+    background: #6c757d;
+}
+
+.btn-confirm-no:hover {
+    background: #5a6268;
+    box-shadow: 0 5px 15px rgba(108, 117, 125, 0.4);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+        padding-right: 10px;
+    }
+
+    .webcam-container {
+        position: relative;
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .watermark {
+        font-size: 2rem;
+    }
+
+    .exam-header h1 {
+        font-size: 1.5rem;
+    }
+
+    .timer {
+        font-size: 2.5rem;
+    }
+}
+
