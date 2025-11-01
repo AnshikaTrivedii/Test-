@@ -1,0 +1,6 @@
+# Netlify Redirects File
+# This file ensures proper routing for the exam portal
+
+# Redirect root to the main exam portal
+/*    /index.html   200
+

@@ -1,0 +1,12 @@
+# Netlify Configuration for Orion-Led Proctored Exam Portal
+
+[build]
+  # No build command needed - static HTML/CSS/JS files
+  publish = "."
+
+[[redirects]]
+  # Redirect root to orion-led.html
+  from = "/"
+  to = "/index.html"
+  status = 200
+
